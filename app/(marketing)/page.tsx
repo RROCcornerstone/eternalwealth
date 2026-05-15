@@ -49,9 +49,6 @@ export default function LandingPage() {
           <Button asChild size="lg" className="px-10 py-6 text-base">
             <Link href="/signup">Begin the framework</Link>
           </Button>
-          <Button asChild size="lg" variant="ghost" className="px-10 py-6 text-base">
-            <Link href="#what-youll-do">What you&rsquo;ll do</Link>
-          </Button>
         </div>
       </section>
 
