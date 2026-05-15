@@ -49,10 +49,13 @@ export default function LandingPage() {
           <Button asChild size="lg" className="px-10 py-6 text-base">
             <Link href="/signup">Begin the framework</Link>
           </Button>
-          <Button asChild size="lg" variant="ghost" className="px-10 py-6 text-base">
-            <Link href="#what-youll-do">What you&rsquo;ll do</Link>
+          <Button asChild size="lg" variant="outline" className="px-10 py-6 text-base">
+            <Link href="/onboarding">Preview without signing in →</Link>
           </Button>
         </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Preview mode walks the whole app without an account. Saves to this browser only.
+        </p>
       </section>
 
       {/* THREE STAGES */}

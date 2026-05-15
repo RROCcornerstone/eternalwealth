@@ -5,23 +5,37 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MODULES, MODULES_BY_SLUG, STAGE_LABELS } from "@/lib/content/modules";
+import { isSupabaseConfigured } from "@/lib/preview";
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
+  let profile: { full_name: string | null; faith_context: string | null } | null = null;
+  let progress: {
+    current_module_slug: string;
+    completed_modules: string[];
+    livestock_complete: boolean;
+    silver_complete: boolean;
+    gold_complete: boolean;
+  } | null = null;
 
-  const { data: profile } = await supabase
-    .from("user_profiles")
-    .select("full_name, faith_context")
-    .eq("user_id", user.id)
-    .maybeSingle();
+  if (isSupabaseConfigured()) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) redirect("/login");
 
-  const { data: progress } = await supabase
-    .from("course_progress")
-    .select("*")
-    .eq("user_id", user.id)
-    .maybeSingle();
+    const { data: p } = await supabase
+      .from("user_profiles")
+      .select("full_name, faith_context")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    profile = p as typeof profile;
+
+    const { data: pr } = await supabase
+      .from("course_progress")
+      .select("*")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    progress = pr as typeof progress;
+  }
 
   const completedCount = (progress?.completed_modules as string[] | undefined)?.length ?? 0;
   const totalCount = MODULES.length;

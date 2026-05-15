@@ -1,20 +1,26 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { OnboardingForm } from "@/components/shared/onboarding-form";
+import { isSupabaseConfigured, PREVIEW_USER_ID } from "@/lib/preview";
 
 export default async function OnboardingPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
+  let userId = PREVIEW_USER_ID;
 
-  const { data: existing } = await supabase
-    .from("user_profiles")
-    .select("*")
-    .eq("user_id", user.id)
-    .maybeSingle();
+  if (isSupabaseConfigured()) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) redirect("/login");
+    userId = user.id;
 
-  if (existing && existing.full_name) {
-    redirect("/course/welcome");
+    const { data: existing } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (existing && existing.full_name) {
+      redirect("/course/welcome");
+    }
   }
 
   return (
@@ -29,7 +35,7 @@ export default async function OnboardingPage() {
         Ten short questions. About a minute. Saves as you go.
       </p>
       <div className="mt-12">
-        <OnboardingForm userId={user.id} />
+        <OnboardingForm userId={userId} />
       </div>
     </div>
   );

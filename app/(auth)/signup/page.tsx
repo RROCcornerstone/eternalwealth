@@ -73,6 +73,23 @@ export default function SignupPage() {
             <Button type="submit" className="w-full" disabled={submitting}>
               {submitting ? "Sending link…" : "Send sign-in link"}
             </Button>
+
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase tracking-wider">
+                <span className="bg-card px-2 text-muted-foreground">or</span>
+              </div>
+            </div>
+
+            <Button asChild type="button" variant="outline" className="w-full">
+              <Link href="/onboarding">Preview without signing in →</Link>
+            </Button>
+            <p className="text-xs text-center text-muted-foreground mt-2">
+              No email. No account. Walks the whole framework. Saves to this browser.
+            </p>
+
             <p className="text-xs text-center text-muted-foreground mt-4">
               By continuing you accept our{" "}
               <Link href="/terms" className="underline">Terms</Link> &amp;{" "}
