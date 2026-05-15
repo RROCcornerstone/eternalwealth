@@ -23,6 +23,22 @@ import { HealthWellnessModule } from "@/components/modules/m09-health-wellness";
 import { SavingsModule } from "@/components/modules/m10-savings";
 import { MinimumDebtModule } from "@/components/modules/m11-minimum-debt";
 import { LivestockCompleteModule } from "@/components/modules/m12-livestock-complete";
+import { AggressiveDebtPayoffModule } from "@/components/modules/m13-aggressive-debt-payoff";
+import { RetirementAccountsModule } from "@/components/modules/m14-retirement-accounts";
+import { SkillBusinessPrepModule } from "@/components/modules/m15-skill-business-prep";
+import { LeisureLifestyleModule } from "@/components/modules/m16-leisure-lifestyle";
+import { SilverCompleteModule } from "@/components/modules/m17-silver-complete";
+import { AggressiveTradingModule } from "@/components/modules/m18-aggressive-trading";
+import { ActiveBusinessInvestmentModule } from "@/components/modules/m19-active-business-investment";
+import { GivingBoardModule } from "@/components/modules/m20-giving-board";
+import { GetRealNumbersModule } from "@/components/modules/m21-get-real-numbers";
+import { CategorizeSpendingModule } from "@/components/modules/m22-categorize-spending";
+import { MoneyFlowModule } from "@/components/modules/m23-money-flow";
+import { InheritanceFoundationModule } from "@/components/modules/m24-inheritance-foundation";
+import { HowMuchNeededModule } from "@/components/modules/m25-how-much-needed";
+import { HowMathWorksModule } from "@/components/modules/m26-how-math-works";
+import { ThreePathsModule } from "@/components/modules/m27-three-paths";
+import { PersonalLegacyPlanModule } from "@/components/modules/m28-personal-legacy-plan";
 import { PlaceholderModule } from "@/components/modules/placeholder";
 
 type ModuleData = Record<string, unknown>;
@@ -40,6 +56,22 @@ const REGISTRY: Record<string, React.ComponentType<ModuleInteractiveProps>> = {
   savings: SavingsModule,
   "minimum-debt": MinimumDebtModule,
   "livestock-complete": LivestockCompleteModule,
+  "aggressive-debt-payoff": AggressiveDebtPayoffModule,
+  "retirement-accounts": RetirementAccountsModule,
+  "skill-business-prep": SkillBusinessPrepModule,
+  "leisure-lifestyle": LeisureLifestyleModule,
+  "silver-complete": SilverCompleteModule,
+  "aggressive-trading": AggressiveTradingModule,
+  "active-business-investment": ActiveBusinessInvestmentModule,
+  "giving-board": GivingBoardModule,
+  "get-real-numbers": GetRealNumbersModule,
+  "categorize-spending": CategorizeSpendingModule,
+  "money-flow": MoneyFlowModule,
+  "inheritance-foundation": InheritanceFoundationModule,
+  "how-much-needed": HowMuchNeededModule,
+  "how-math-works": HowMathWorksModule,
+  "three-paths": ThreePathsModule,
+  "personal-legacy-plan": PersonalLegacyPlanModule,
 };
 
 export interface ModuleInteractiveProps {
