@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import { ScreenShell } from "@/components/screens/screen-shell";
 import { SCREENS_BY_ID } from "@/lib/content/acts";
 import type { RenderContext } from "@/components/screens/registry";
 import { createClient } from "@/lib/supabase/client";
 import { BRAND_LABEL, type Brand as MathBrand } from "@/lib/math/brand-engine";
 
-const BODY: Record<MathBrand, JSX.Element> = {
+const BODY: Record<MathBrand, ReactElement> = {
   cattle: (
     <p>
       Your roadmap is focused on one thing:{" "}
@@ -58,7 +58,7 @@ export function Screen45({ userId, brand, initialData, progress }: RenderContext
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["4.5"]}
+      screen={SCREENS_BY_ID["4.5"]!}
       userId={userId}
       brand={actualBrand}
       initialData={initialData}

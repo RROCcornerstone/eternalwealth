@@ -38,9 +38,11 @@ type Plan = {
     pmt_monthly?: number;
     annual_income_needed?: number;
     years_to_retirement?: number;
+    LS_total_today?: number;
   } | null;
   pmt_monthly_cents?: number | null;
   annual_income_needed_cents?: number | null;
+  ls_total_today_cents?: number | null;
 };
 
 export function Screen212({ userId, brand, initialData, progress }: RenderContext) {
@@ -56,7 +58,7 @@ export function Screen212({ userId, brand, initialData, progress }: RenderContex
       const { data } = await supabase
         .from("legacy_plans")
         .select(
-          "inputs,outputs,pmt_monthly_cents,annual_income_needed_cents",
+          "inputs,outputs,pmt_monthly_cents,annual_income_needed_cents,ls_total_today_cents",
         )
         .eq("user_id", userId)
         .maybeSingle();
@@ -80,6 +82,10 @@ export function Screen212({ userId, brand, initialData, progress }: RenderContex
   const years =
     plan?.outputs?.years_to_retirement ??
     Math.max(0, RETIREMENT_AGE - currentAge);
+  const lsTotalToday =
+    plan?.ls_total_today_cents != null
+      ? plan.ls_total_today_cents / 100
+      : (plan?.outputs?.LS_total_today as number | undefined) ?? 0;
 
   const series = useMemo(
     () => compoundGrowthSeries(currentAge, pmtMonthly),
@@ -91,7 +97,7 @@ export function Screen212({ userId, brand, initialData, progress }: RenderContex
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.12"]}
+      screen={SCREENS_BY_ID["2.12"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}
@@ -104,7 +110,8 @@ export function Screen212({ userId, brand, initialData, progress }: RenderContex
             The path
           </p>
           <h1 className="font-display text-3xl sm:text-4xl leading-tight text-foreground">
-            Here&apos;s the truth: you don&apos;t need a giant lump sum today.
+            Here&apos;s the truth: you don&apos;t need{" "}
+            {FMT_FULL.format(lsTotalToday)} today.
           </h1>
           <p className="text-lg text-muted-foreground">
             You need to plant the seed and let time + compounding do the rest.

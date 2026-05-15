@@ -26,7 +26,7 @@ export function Screen26({ userId, brand, initialData }: RenderContext) {
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.6"]}
+      screen={SCREENS_BY_ID["2.6"]!}
       userId={userId}
       brand={brand}
       initialData={{ retirement_spending_today: saved, ...initialData }}
@@ -55,7 +55,9 @@ export function Screen26({ userId, brand, initialData }: RenderContext) {
             </div>
             <Slider
               value={[value]}
-              onValueChange={([v]) => {
+              onValueChange={(values) => {
+                const v = values[0];
+                if (v == null) return;
                 setValue(v);
                 setField("retirement_spending_today", v);
               }}

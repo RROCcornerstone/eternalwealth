@@ -63,7 +63,7 @@ export function Screen44({ userId, brand, initialData, progress }: RenderContext
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["4.4"]}
+      screen={SCREENS_BY_ID["4.4"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}

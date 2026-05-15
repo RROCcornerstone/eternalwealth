@@ -30,7 +30,7 @@ export function Screen32({ userId, brand, initialData }: RenderContext) {
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["3.2"]}
+      screen={SCREENS_BY_ID["3.2"]!}
       userId={userId}
       brand={brand}
       initialData={initial.length ? { uploaded_files: initial } : initialData}

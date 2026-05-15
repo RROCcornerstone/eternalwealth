@@ -21,7 +21,7 @@ export function Screen21({ userId, brand, initialData, profile }: RenderContext)
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.1"]}
+      screen={SCREENS_BY_ID["2.1"]!}
       userId={userId}
       brand={brand}
       initialData={initial}

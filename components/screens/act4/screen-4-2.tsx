@@ -46,7 +46,7 @@ export function Screen42({ userId, brand, initialData, progress, profile }: Rend
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["4.2"]}
+      screen={SCREENS_BY_ID["4.2"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}

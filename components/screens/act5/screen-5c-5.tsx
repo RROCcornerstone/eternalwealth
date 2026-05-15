@@ -14,7 +14,7 @@ const ROWS: { time: string; activity: string }[] = [
 export function Screen5C5({ userId, brand, initialData }: RenderContext) {
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["5C.5"]}
+      screen={SCREENS_BY_ID["5C.5"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}

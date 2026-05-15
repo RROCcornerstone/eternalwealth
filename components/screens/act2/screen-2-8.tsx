@@ -26,7 +26,7 @@ export function Screen28({ userId, brand, initialData }: RenderContext) {
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.8"]}
+      screen={SCREENS_BY_ID["2.8"]!}
       userId={userId}
       brand={brand}
       initialData={{ gift_per_grandchild_today: saved, ...initialData }}
@@ -56,7 +56,9 @@ export function Screen28({ userId, brand, initialData }: RenderContext) {
             </div>
             <Slider
               value={[value]}
-              onValueChange={([v]) => {
+              onValueChange={(values) => {
+                const v = values[0];
+                if (v == null) return;
                 setValue(v);
                 setField("gift_per_grandchild_today", v);
               }}

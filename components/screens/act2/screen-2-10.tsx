@@ -75,7 +75,7 @@ export function Screen210({
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.10"]}
+      screen={SCREENS_BY_ID["2.10"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}

@@ -15,7 +15,7 @@ export function Screen23({ userId, brand, initialData }: RenderContext) {
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.3"]}
+      screen={SCREENS_BY_ID["2.3"]!}
       userId={userId}
       brand={brand}
       initialData={{ num_children: initialChildren, ...initialData }}

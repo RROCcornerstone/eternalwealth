@@ -31,7 +31,7 @@ export function Screen41({ userId, brand, initialData }: RenderContext) {
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["4.1"]}
+      screen={SCREENS_BY_ID["4.1"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}

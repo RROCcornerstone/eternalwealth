@@ -48,7 +48,7 @@ export function Screen29({ userId, brand, initialData, profile }: RenderContext)
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.9"]}
+      screen={SCREENS_BY_ID["2.9"]!}
       userId={userId}
       brand={brand}
       initialData={{ email, phone, ...initialData }}

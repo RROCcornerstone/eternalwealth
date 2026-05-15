@@ -56,7 +56,7 @@ export function Screen5S2({ userId, brand, initialData }: RenderContext) {
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["5S.2"]}
+      screen={SCREENS_BY_ID["5S.2"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}

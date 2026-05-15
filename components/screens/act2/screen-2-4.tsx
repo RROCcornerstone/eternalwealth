@@ -110,7 +110,7 @@ export function Screen24({ userId, brand, initialData, profile }: RenderContext)
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.4"]}
+      screen={SCREENS_BY_ID["2.4"]!}
       userId={userId}
       brand={brand}
       initialData={{ num_grandchildren: savedFromInitial ?? 0, ...initialData }}

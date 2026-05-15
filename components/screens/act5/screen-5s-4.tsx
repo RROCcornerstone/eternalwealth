@@ -8,7 +8,7 @@ import type { RenderContext } from "@/components/screens/registry";
 export function Screen5S4({ userId, brand, initialData }: RenderContext) {
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["5S.4"]}
+      screen={SCREENS_BY_ID["5S.4"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}

@@ -107,7 +107,7 @@ export function Screen211({ userId, brand, initialData, progress }: RenderContex
 
   return (
     <ScreenShell
-      screen={SCREENS_BY_ID["2.11"]}
+      screen={SCREENS_BY_ID["2.11"]!}
       userId={userId}
       brand={brand}
       initialData={initialData}
