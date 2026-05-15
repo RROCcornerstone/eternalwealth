@@ -1,26 +1,21 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { OnboardingForm } from "@/components/shared/onboarding-form";
-import { isSupabaseConfigured, PREVIEW_USER_ID } from "@/lib/preview";
 
 export default async function OnboardingPage() {
-  let userId = PREVIEW_USER_ID;
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+  const userId = user.id;
 
-  if (isSupabaseConfigured()) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect("/login");
-    userId = user.id;
+  const { data: existing } = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq("user_id", user.id)
+    .maybeSingle();
 
-    const { data: existing } = await supabase
-      .from("user_profiles")
-      .select("*")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    if (existing && existing.full_name) {
-      redirect("/course/welcome");
-    }
+  if (existing && (existing as any).full_name) {
+    redirect("/course/welcome");
   }
 
   return (

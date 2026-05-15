@@ -2,17 +2,12 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { isSupabaseConfigured } from "@/lib/preview";
 
 export default async function SettingsPage() {
-  let email = "preview@eternalwealth.app";
-
-  if (isSupabaseConfigured()) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect("/login");
-    email = user.email ?? email;
-  }
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+  const email = user.email ?? "";
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">

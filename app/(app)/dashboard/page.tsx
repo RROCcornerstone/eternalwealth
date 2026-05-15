@@ -5,33 +5,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MODULES, MODULES_BY_SLUG, STAGE_LABELS } from "@/lib/content/modules";
-import { isSupabaseConfigured } from "@/lib/preview";
 
 export default async function DashboardPage() {
-  // Supabase typed client is intentionally untyped (see lib/supabase/client.ts);
-  // values from queries land as `any` and we narrow at the read site.
-  let profile: any = null;
-  let progress: any = null;
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
-  if (isSupabaseConfigured()) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect("/login");
+  const { data: p } = await supabase
+    .from("user_profiles")
+    .select("full_name, faith_context")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  const profile: any = p ?? null;
 
-    const { data: p } = await supabase
-      .from("user_profiles")
-      .select("full_name, faith_context")
-      .eq("user_id", user.id)
-      .maybeSingle();
-    profile = p ?? null;
-
-    const { data: pr } = await supabase
-      .from("course_progress")
-      .select("*")
-      .eq("user_id", user.id)
-      .maybeSingle();
-    progress = pr ?? null;
-  }
+  const { data: pr } = await supabase
+    .from("course_progress")
+    .select("*")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  const progress: any = pr ?? null;
 
   const completedModules: string[] = Array.isArray(progress?.completed_modules) ? progress.completed_modules : [];
   const completedCount = completedModules.length;
