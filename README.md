@@ -93,3 +93,4 @@ See [`ACTION_REQUIRED.md`](./ACTION_REQUIRED.md) for the full handoff.
 ## Disclaimer
 
 Eternal Wealth is educational software, not financial / legal / tax / investment advice. See `/disclaimer` for the full version. Talk to a qualified professional before making material money decisions.
+<!-- Deploy timestamp: Fri May 15 19:55:32 UTC 2026 -->
