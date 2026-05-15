@@ -8,14 +8,10 @@ import { MODULES, MODULES_BY_SLUG, STAGE_LABELS } from "@/lib/content/modules";
 import { isSupabaseConfigured } from "@/lib/preview";
 
 export default async function DashboardPage() {
-  let profile: { full_name: string | null; faith_context: string | null } | null = null;
-  let progress: {
-    current_module_slug: string;
-    completed_modules: string[];
-    livestock_complete: boolean;
-    silver_complete: boolean;
-    gold_complete: boolean;
-  } | null = null;
+  // Supabase typed client is intentionally untyped (see lib/supabase/client.ts);
+  // values from queries land as `any` and we narrow at the read site.
+  let profile: any = null;
+  let progress: any = null;
 
   if (isSupabaseConfigured()) {
     const supabase = await createClient();
@@ -27,19 +23,20 @@ export default async function DashboardPage() {
       .select("full_name, faith_context")
       .eq("user_id", user.id)
       .maybeSingle();
-    profile = p as typeof profile;
+    profile = p ?? null;
 
     const { data: pr } = await supabase
       .from("course_progress")
       .select("*")
       .eq("user_id", user.id)
       .maybeSingle();
-    progress = pr as typeof progress;
+    progress = pr ?? null;
   }
 
-  const completedCount = (progress?.completed_modules as string[] | undefined)?.length ?? 0;
+  const completedModules: string[] = Array.isArray(progress?.completed_modules) ? progress.completed_modules : [];
+  const completedCount = completedModules.length;
   const totalCount = MODULES.length;
-  const currentSlug = progress?.current_module_slug ?? "welcome";
+  const currentSlug: string = progress?.current_module_slug ?? "welcome";
   const currentModule = MODULES_BY_SLUG[currentSlug];
 
   const currentStage = (() => {
