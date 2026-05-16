@@ -54,22 +54,20 @@ export function Screen32({ userId, brand, initialData }: RenderContext) {
             });
 
             try {
-              const supabase = createClient();
-              const path = `statements/${userId}/${Date.now()}-${file.name}`;
-              const { error: uploadError } = await supabase.storage
-                .from("statements")
-                .upload(path, file);
+              // POST to the full pipeline — storage + extraction + categorization + DB save
+              const form = new FormData();
+              form.append("file", file);
+              const res = await fetch("/api/upload-statement", { method: "POST", body: form });
+              const result = await res.json();
 
-              if (uploadError) {
-                // Bucket might not exist yet — degrade gracefully.
-                setStorageWarning(
-                  "Storage isn't fully configured yet — your file was queued locally. You can still continue with sample data.",
-                );
+              if (!res.ok) {
+                const msg = result?.error ?? "Upload failed";
+                if (res.status === 422 || res.status === 500) {
+                  setStorageWarning(msg);
+                }
                 setFiles((prev) => {
                   const next = prev.map((f) =>
-                    f === entry
-                      ? { ...f, path, status: "uploaded" as const }
-                      : f,
+                    f === entry ? { ...f, status: "error" as const, error: msg } : f,
                   );
                   setField("uploaded_files", next);
                   return next;
@@ -77,29 +75,19 @@ export function Screen32({ userId, brand, initialData }: RenderContext) {
                 continue;
               }
 
-              await supabase.from("statement_uploads").insert({
-                user_id: userId,
-                storage_path: path,
-                original_filename: file.name,
-                status: "uploaded",
-              } as any);
-
               setFiles((prev) => {
                 const next = prev.map((f) =>
                   f === entry
-                    ? { ...f, path, status: "uploaded" as const }
+                    ? {
+                        ...f,
+                        path: result.upload_id,
+                        status: "uploaded" as const,
+                      }
                     : f,
                 );
                 setField("uploaded_files", next);
                 return next;
               });
-
-              // Fire-and-forget categorize call (stub returns 501 — we ignore).
-              fetch("/api/categorize", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ path, user_id: userId }),
-              }).catch(() => {});
             } catch (err) {
               const msg = err instanceof Error ? err.message : "Upload failed";
               setFiles((prev) => {
